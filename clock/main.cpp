@@ -5,9 +5,15 @@ using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::Vector2u windowSize(200, 200);
+    sf::RenderWindow window(sf::VideoMode(windowSize.x, windowSize.y), "SFML works!");
+    sf::Texture clockTexture;
+    if(!clockTexture.loadFromFile("clockTexture.png")){
+        return EXIT_FAILURE;
+    }
+    sf::Sprite clockSprite(clockTexture);
+    clockSprite.setScale(windowSize.x / clockSprite.getLocalBounds().width, windowSize.y / clockSprite.getLocalBounds().height);
+
 
     while (window.isOpen())
     {
@@ -19,9 +25,9 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(clockSprite);
         window.display();
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
