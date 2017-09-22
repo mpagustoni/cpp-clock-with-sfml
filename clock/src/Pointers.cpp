@@ -1,8 +1,10 @@
 #include "Pointers.h"
-#include <SFML/Graphics.hpp>
-Pointers::Pointers(sf::RenderWindow window)
+
+Pointers::Pointers(sf::RenderWindow *w, sf::Vector2u windowSize)
 {
-    this.window = window;
+    this->window = window;
+    this->windowSize = windowSize;
+    sf::Vector2u pointerPos(98, 98);
     sf::RectangleShape secPointer(sf::Vector2f(5, (windowSize.y / 2) - 10));
     secPointer.setPosition(pointerPos.x, pointerPos.y);
     secPointer.setFillColor(sf::Color::Red);
@@ -23,7 +25,7 @@ Pointers::~Pointers()
     //dtor
 }
 void Pointers::draw(){
-    this.window.draw(secPointer);
-    this.window.draw(minPointer);
-    this.window.draw(hourPointer);
+    this->window.draw(secPointer);
+    //this->windowdraw(minPointer);
+    //this->window->draw(hourPointer);
 }

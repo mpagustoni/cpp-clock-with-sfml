@@ -8,7 +8,7 @@ int main()
 {
     sf::Vector2u windowSize(200, 200);
     sf::RenderWindow window(sf::VideoMode(windowSize.x, windowSize.y), "SFML works!");
-    Pointers pts(window);
+    Pointers pts(&window, windowSize);
 
     sf::Texture clockTexture;
     if(!clockTexture.loadFromFile("clockTexture.png")){
@@ -16,9 +16,6 @@ int main()
     }
     sf::Sprite clockSprite(clockTexture);
     clockSprite.setScale(windowSize.x / clockSprite.getLocalBounds().width, windowSize.y / clockSprite.getLocalBounds().height);
-
-    sf::Vector2u pointerPos(98, 98);
-
 
 
     while (window.isOpen())
@@ -33,6 +30,7 @@ int main()
         window.clear();
 
         window.draw(clockSprite);
+        pts.draw();
         window.display();
     }
 
