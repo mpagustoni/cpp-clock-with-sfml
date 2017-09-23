@@ -1,31 +1,32 @@
 #include "Pointers.h"
-
-Pointers::Pointers(sf::RenderWindow *w, sf::Vector2u windowSize)
+Pointers::Pointers(Vector2f windowSize)
 {
-    this->window = window;
-    this->windowSize = windowSize;
-    sf::Vector2u pointerPos(98, 98);
-    sf::RectangleShape secPointer(sf::Vector2f(5, (windowSize.y / 2) - 10));
-    secPointer.setPosition(pointerPos.x, pointerPos.y);
-    secPointer.setFillColor(sf::Color::Red);
+    this->pointerPos = Vector2f(98, 98);
+    this->secPointer = RectangleShape(Vector2f(pointerWidth, (-windowSize.y / 2) + 10));
+    this->secPointer.setOrigin(pointerWidth / 2, 0);
+    this->secPointer.setPosition(pointerPos.x, pointerPos.y);
+    this->secPointer.setFillColor(Color::Red);
 
-    sf::RectangleShape minPointer(sf::Vector2f(5, (windowSize.y / 2) - 10));
-    minPointer.setPosition(pointerPos.x, pointerPos.y);
-    minPointer.setFillColor(sf::Color::Black);
+    this->minPointer = RectangleShape(Vector2f(pointerWidth, (-windowSize.y / 2) + 10));
+    this->minPointer.setOrigin(pointerWidth / 2 , 0);
+    this->minPointer.setPosition(pointerPos.x, pointerPos.y);
+    this->minPointer.setFillColor(Color::Black);
 
-    minPointer.rotate(270);
-
-    sf::RectangleShape hourPointer(sf::Vector2f(sf::Vector2f(5, (windowSize.y / 2) - 25)));
-    hourPointer.setPosition(pointerPos.x, pointerPos.y);
-    hourPointer.setFillColor(sf::Color::Black);
+    this->hourPointer = RectangleShape(Vector2f(pointerWidth, (-windowSize.y / 2) + 25));
+    this->hourPointer.setOrigin(pointerWidth / 2, 0);
+    this->hourPointer.setPosition(pointerPos.x, pointerPos.y);
+    this->hourPointer.setFillColor(Color::Black);
 }
 
 Pointers::~Pointers()
 {
     //dtor
 }
-void Pointers::draw(){
-    this->window.draw(secPointer);
-    //this->windowdraw(minPointer);
-    //this->window->draw(hourPointer);
+
+void Pointers::update(){
+    now = time(0);
+    tstruct = *localtime(&now);
+    this->secPointer.setRotation(tstruct.tm_sec * 6);
+    this->minPointer.setRotation(tstruct.tm_min * 6);
+    this->hourPointer.setRotation(tstruct.tm_hour * 30);
 }
